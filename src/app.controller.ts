@@ -6,7 +6,7 @@ import { Task } from './connection/modules/task.entity'
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('abc')
+  @Get()
   getHello(): string {
     return this.appService.getHello();
   }
@@ -19,19 +19,25 @@ export class AppController {
   }
 
 
-  
   @Post('new-task')
-  async newData(@Body() newTaskData: Partial<Task>): Promise<Task> {
+  async newData(@Body() newTaskData: { title: string; description: string }): Promise<Task> {
     return this.appService.newData(newTaskData);
   }
-
-
-
-
-
-
+  
 
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

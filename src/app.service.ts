@@ -10,17 +10,22 @@ export class AppService {
   ) {}
 
   getHello(): string {
-    return 'Hello World!';
+    return 'HI, EVERYONE!<br>please, use the following routes to access the API features:<br><li>/all-data => get all data</li><li>/new-task => create new task</li>';
   }
 
   async getAllData(): Promise<Task[]> {
-    // Use the repository to fetch all data from the "Task" table
     return this.taskRepository.find();
   }
 
-  async newData(newTaskData: Partial<Task>): Promise<Task> {
-    // Create and save a new task in the "Task" table
-    const newTask = this.taskRepository.create(newTaskData);
+  async newData(newTaskData: { title: string, description: string }): Promise<Task> {
+    const { title, description } = newTaskData;
+
+    const newTask = this.taskRepository.create({
+      title: title,
+      description: description,
+      createdAt: new Date(),
+      completedAt: null,
+    });
     return this.taskRepository.save(newTask);
-  }
+    }
 }

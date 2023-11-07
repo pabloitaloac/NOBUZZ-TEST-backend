@@ -3,24 +3,35 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Task } from './connection/modules/task.entity'; 
+import { JwtModule } from '@nestjs/jwt';
 
+const secretKey = '';
 
 
 @Module({
   imports: [
-      TypeOrmModule.forRoot({
-        type: 'postgres', // The type of your database
-        host: 'localhost',
-        port: 5432,
-        username: 'nobuzztest',
-        password: 'nobuzztest',
-        database: 'tarefas',
-        entities: [Task], // Add your entity classes here
-        synchronize: true, // Only for development; set to false in production
-      }),
+    
+    JwtModule.register({
+      secret: secretKey,
+      signOptions: { expiresIn: '1h' },
+    }),
+
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'nobuzztest',
+      password: 'nobuzztest',
+      database: 'nobuzztest', 
+      entities: [Task], 
+      synchronize: true, 
+    }),
     
     TypeOrmModule.forFeature([Task])],
-  controllers: [AppController],
-  providers: [AppService],
+    
+    controllers: [AppController],
+
+    providers: [AppService],
+
 })
 export class AppModule {}  

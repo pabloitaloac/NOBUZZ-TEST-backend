@@ -1,22 +1,19 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Task {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
-  description: string;
+  username: string;
 
-  @Column({ nullable: true })
-  status: boolean;
+  @Column()
+  password: string;
 
   @CreateDateColumn()
   createdAt: Date;
-
-  @Column({ nullable: true })
-  completedAt: Date;
 }

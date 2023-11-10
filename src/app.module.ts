@@ -2,10 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Task } from './connection/modules/task.entity'; 
 import { JwtModule } from '@nestjs/jwt';
 
-const secretKey = '';
+import { JwtStrategy } from './connection/auth/jwt.strategy';
+const crypto = require('crypto');
+
+import { Task } from './connection/modules/task.entity'; 
+import { User } from './connection/modules/user.entity'; 
+
+const secretKey = '1234567890';
 
 
 @Module({
@@ -22,16 +27,16 @@ const secretKey = '';
       port: 5432,
       username: 'nobuzztest',
       password: 'nobuzztest',
-      database: 'nobuzztest', 
-      entities: [Task], 
+      database: 'nobuzztest',  
+      entities: [Task,User], 
       synchronize: true, 
     }),
     
-    TypeOrmModule.forFeature([Task])],
+    TypeOrmModule.forFeature([Task,User])],
     
     controllers: [AppController],
 
-    providers: [AppService],
+    providers: [AppService,JwtStrategy],
 
 })
 export class AppModule {}  
